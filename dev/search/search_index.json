@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "TERMIOS", 
+            "text": "TERMIOS\n\n\n \n \n \n \n\n\nThis package provides an interface to the POSIX calls for tty I/O control.\n\n\n\n\nThe termios functions describe a general terminal interface that is\n\n\n\n\nprovided to control asynchronous communications ports.\n\n\nFor a complete description of these calls, see the \ntermios(3)\n manual page.\n\n\nAll functions in this package take a \nRawFD\n file descriptor \nfd\n as their first argument. This can also be an integer file descriptor or a concrete instance of \nBase.LibuvStream\n, such as \nstdin\n or \nstdout\n.\n\n\nThis package defines the constants needed to work with the functions provided. You may need to refer to your system documentation for more information on using this package.", 
             "title": "Home"
         }, 
         {
             "location": "/#termios", 
-            "text": "", 
+            "text": "This package provides an interface to the POSIX calls for tty I/O control.   The termios functions describe a general terminal interface that is   provided to control asynchronous communications ports.  For a complete description of these calls, see the  termios(3)  manual page.  All functions in this package take a  RawFD  file descriptor  fd  as their first argument. This can also be an integer file descriptor or a concrete instance of  Base.LibuvStream , such as  stdin  or  stdout .  This package defines the constants needed to work with the functions provided. You may need to refer to your system documentation for more information on using this package.", 
             "title": "TERMIOS"
         }, 
         {

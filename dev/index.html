@@ -297,6 +297,14 @@
                 <p><a id='TERMIOS-1'></a></p>
 <h1 id="termios">TERMIOS</h1>
 <p><a href="https://kdheepak.github.io/TERMIOS.jl/stable"><img alt="Stable" src="https://img.shields.io/badge/docs-stable-blue.svg" /></a> <a href="https://kdheepak.github.io/TERMIOS.jl/dev"><img alt="Dev" src="https://img.shields.io/badge/docs-dev-blue.svg" /></a> <a href="https://travis-ci.com/kdheepak/TERMIOS.jl"><img alt="Build Status" src="https://travis-ci.com/kdheepak/TERMIOS.jl.svg?branch=master" /></a> <a href="https://codecov.io/gh/kdheepak/TERMIOS.jl"><img alt="Codecov" src="https://codecov.io/gh/kdheepak/TERMIOS.jl/branch/master/graph/badge.svg" /></a> <a href="https://coveralls.io/github/kdheepak/TERMIOS.jl?branch=master"><img alt="Coveralls" src="https://coveralls.io/repos/github/kdheepak/TERMIOS.jl/badge.svg?branch=master" /></a></p>
+<p>This package provides an interface to the POSIX calls for tty I/O control.</p>
+<blockquote>
+<p>The termios functions describe a general terminal interface that is</p>
+</blockquote>
+<p>provided to control asynchronous communications ports.</p>
+<p>For a complete description of these calls, see the <a href="http://man7.org/linux/man-pages/man3/termios.3.html">termios(3)</a> manual page.</p>
+<p>All functions in this package take a <code>RawFD</code> file descriptor <code>fd</code> as their first argument. This can also be an integer file descriptor or a concrete instance of <code>Base.LibuvStream</code>, such as <code>stdin</code> or <code>stdout</code>.</p>
+<p>This package defines the constants needed to work with the functions provided. You may need to refer to your system documentation for more information on using this package.</p>
                 
                   
                 
