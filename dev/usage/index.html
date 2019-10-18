@@ -350,7 +350,7 @@
 
 
 <p>Returns the input baud rate stored in the termios structure.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L377-L381' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L377-L381' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.cfgetospeed-Tuple{TERMIOS.termios}' href='#TERMIOS.cfgetospeed-Tuple{TERMIOS.termios}'>#</a>
 <strong><code>TERMIOS.cfgetospeed</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">cfgetospeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
@@ -358,7 +358,7 @@
 
 
 <p>Returns the output baud rate stored in the termios structure.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L384-L388' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L384-L388' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.cfmakeraw-Tuple{TERMIOS.termios}' href='#TERMIOS.cfmakeraw-Tuple{TERMIOS.termios}'>#</a>
 <strong><code>TERMIOS.cfmakeraw</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">cfmakeraw</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
@@ -375,7 +375,7 @@
 </pre></div>
 
 
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L350-L361' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L350-L361' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.cfsetispeed-Tuple{TERMIOS.termios,Integer}' href='#TERMIOS.cfsetispeed-Tuple{TERMIOS.termios,Integer}'>#</a>
 <strong><code>TERMIOS.cfsetispeed</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">cfsetispeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">,</span> <span class="n">speed</span><span class="o">::</span><span class="kt">Integer</span><span class="p">)</span>
@@ -405,7 +405,7 @@
 <li>TERMIOS.B230400</li>
 </ul>
 <p>The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 &amp; CBAUDEX is nonzero.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L391-L416' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L391-L416' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.cfsetospeed-Tuple{TERMIOS.termios,Integer}' href='#TERMIOS.cfsetospeed-Tuple{TERMIOS.termios,Integer}'>#</a>
 <strong><code>TERMIOS.cfsetospeed</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">cfsetospeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">,</span> <span class="n">speed</span><span class="o">::</span><span class="kt">Integer</span><span class="p">)</span>
@@ -435,7 +435,7 @@
 <li>TERMIOS.B230400</li>
 </ul>
 <p>The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 &amp; CBAUDEX is nonzero.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L423-L448' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L423-L448' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.cfsetspeed-Tuple{TERMIOS.termios,Integer}' href='#TERMIOS.cfsetspeed-Tuple{TERMIOS.termios,Integer}'>#</a>
 <strong><code>TERMIOS.cfsetspeed</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">cfsetspeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">,</span> <span class="n">speed</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span>
@@ -443,7 +443,7 @@
 
 
 <p>is a 4.4BSD extension. It takes the same arguments as cfsetispeed(), and sets both input and output speed.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L367-L371' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L367-L371' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.tcdrain-Tuple{RawFD}' href='#TERMIOS.tcdrain-Tuple{RawFD}'>#</a>
 <strong><code>TERMIOS.tcdrain</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">tcdrain</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">)</span>
@@ -451,7 +451,7 @@
 
 
 <p>Wait until all output written to file descriptor fd has been transmitted.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L291-L295' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L291-L295' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.tcflow-Tuple{RawFD,Integer}' href='#TERMIOS.tcflow-Tuple{RawFD,Integer}'>#</a>
 <strong><code>TERMIOS.tcflow</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">tcflow</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">,</span> <span class="n">action</span><span class="o">::</span><span class="kt">Integer</span><span class="p">)</span>
@@ -465,7 +465,7 @@
 <li>TERMIOS.TCIOFF to suspend input,</li>
 <li>TERMIOS.TCION to restart input.</li>
 </ul>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L303-L312' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L303-L312' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.tcflush-Tuple{RawFD,Integer}' href='#TERMIOS.tcflush-Tuple{RawFD,Integer}'>#</a>
 <strong><code>TERMIOS.tcflush</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">tcflush</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">,</span> <span class="n">queue</span><span class="o">::</span><span class="kt">Integer</span><span class="p">)</span>
@@ -478,7 +478,7 @@
 <li>TERMIOS.TCOFLUSH flushes data written but not transmitted.</li>
 <li>TERMIOS.TCIOFLUSH flushes both data received but not read, and data written but not transmitted.</li>
 </ul>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L320-L328' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L320-L328' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.tcgetattr-Tuple{RawFD,TERMIOS.termios}' href='#TERMIOS.tcgetattr-Tuple{RawFD,TERMIOS.termios}'>#</a>
 <strong><code>TERMIOS.tcgetattr</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">fd</span><span class="o">::</span><span class="kt">RawFD</span><span class="p">,</span> <span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
@@ -488,7 +488,7 @@
 
 
 <p>Get the tty attributes for file descriptor fd</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L260-L266' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L260-L266' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.tcsendbreak-Tuple{RawFD,Integer}' href='#TERMIOS.tcsendbreak-Tuple{RawFD,Integer}'>#</a>
 <strong><code>TERMIOS.tcsendbreak</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">tcsendbreak</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">,</span> <span class="n">duration</span><span class="o">::</span><span class="kt">Integer</span><span class="p">)</span>
@@ -497,7 +497,7 @@
 
 <p>Transmit a continuous stream of zero-valued bits for a specific duration, if the terminal is using asynchronous serial data transmission. If duration is zero, it transmits zero-valued bits for at least 0.25 seconds, and not more that 0.5 seconds. If duration is not zero, it sends zero-valued bits for some implementation-defined length of time.</p>
 <p>If the terminal is not using asynchronous serial data transmission, tcsendbreak() returns without taking any action.</p>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L336-L342' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L336-L342' class='documenter-source'>source</a><br></p>
 <p><a id='TERMIOS.tcsetattr-Tuple{RawFD,Integer,TERMIOS.termios}' href='#TERMIOS.tcsetattr-Tuple{RawFD,Integer,TERMIOS.termios}'>#</a>
 <strong><code>TERMIOS.tcsetattr</code></strong> &mdash; <em>Method</em>.</p>
 <div class="codehilite"><pre><span></span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">,</span> <span class="n">when</span><span class="o">::</span><span class="kt">Integer</span><span class="p">,</span> <span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
@@ -510,7 +510,7 @@
 <li>TERMIOS.TCSADRAIN to change after transmitting all queued output</li>
 <li>TERMIOS.TCSAFLUSH to change after transmitting all queued output and discarding all queued input.</li>
 </ul>
-<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d747c3e5f5890f80ed923350b29efa202c7e202f/src/TERMIOS.jl#L274-L283' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/7db75fb3d20efc341ab4c9b35f5f2112d17370de/src/TERMIOS.jl#L274-L283' class='documenter-source'>source</a><br></p>
                 
                   
                 
