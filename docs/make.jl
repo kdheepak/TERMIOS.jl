@@ -1,17 +1,21 @@
-using Documenter, termios
+using Documenter, TERMIOS, DocumenterMarkdown
 
-makedocs(;
-    modules=[termios],
-    format=Documenter.HTML(),
-    pages=[
-        "Home" => "index.md",
-    ],
-    repo="https://github.com/kdheepak/termios.jl/blob/{commit}{path}#L{line}",
-    sitename="termios.jl",
-    authors="Dheepak Krishnamurthy",
-    assets=String[],
-)
+cp(joinpath(@__DIR__, "../README.md"), joinpath(@__DIR__, "./src/index.md"), force=true, follow_symlinks=true)
+
+makedocs(
+         sitename="TERMIOS.jl documentation",
+         format = Markdown()
+        )
 
 deploydocs(;
-    repo="github.com/kdheepak/termios.jl",
+    repo="github.com/kdheepak/TERMIOS.jl",
+    deps = Deps.pip(
+                   "mkdocs==0.17.5",
+                   "mkdocs-material==2.9.4",
+                   "python-markdown-math",
+                   "pygments",
+                   "pymdown-extensions",
+                   ),
+    make = () -> run(`mkdocs build`),
+    target = "site",
 )

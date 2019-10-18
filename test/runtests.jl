@@ -37,6 +37,18 @@ const c_ospeed = Sys.islinux() ? 0x0000000f : 0x0000000000002580
     @test TERMIOS.cfgetispeed(term) == term.c_ispeed
     @test TERMIOS.cfgetospeed(term) == term.c_ospeed
 
+    TERMIOS.cfsetispeed(term, term.c_ispeed)
+    @test TERMIOS.cfgetispeed(term) == term.c_ispeed
+
+    TERMIOS.cfsetospeed(term, term.c_ospeed)
+    @test TERMIOS.cfgetospeed(term) == term.c_ospeed
+
+    # term = TERMIOS.termios()
+    # TERMIOS.tcgetattr(0, term)
+    # TERMIOS.tcsetattr(0, TERMIOS.TCSANOW, term)
+    # @test TERMIOS.cfgetispeed(term) == term.c_ispeed
+    # @test TERMIOS.cfgetospeed(term) == term.c_ospeed
+
 end
 
 @testset "termios.jl stdin" begin

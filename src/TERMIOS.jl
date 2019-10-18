@@ -272,16 +272,16 @@ tcgetattr(s::Base.LibuvStream, term) = tcgetattr(_file_handle(s), term)
 tcgetattr(f::Int, term) = tcgetattr(RawFD(f), term)
 
 """
-    tcsetattr(fd, when, attributes)
+    tcsetattr(s::Base.LibuvStream, when::Integer, term::termios)
 
 Set the tty attributes for file descriptor fd.
 The when argument determines when the attributes are changed:
 
-- termios.TCSANOW to change immediately
-- termios.TCSADRAIN to change after transmitting all queued output
-- termios.TCSAFLUSH to change after transmitting all queued output and discarding all queued input.
+- TERMIOS.TCSANOW to change immediately
+- TERMIOS.TCSADRAIN to change after transmitting all queued output
+- TERMIOS.TCSAFLUSH to change after transmitting all queued output and discarding all queued input.
 """
-function tcsetattr(fd::RawFD, when, term::termios)
+function tcsetattr(fd::RawFD, when::Integer, term::termios)
     r = ccall(:tcgetattr, Cint, (Cint, Cint, Ptr{Cvoid}), fd, when, Ref(term))
     r == -1 ? throw(TERMIOSError("tcsetattr failed: $(Base.Libc.strerror())")) : nothing
 end
@@ -289,7 +289,7 @@ tcsetattr(s::Base.LibuvStream, when, term) = tcsetattr(_file_handle(s), when, te
 tcsetattr(f::Int, when, term) = tcsetattr(RawFD(f), when, term)
 
 """
-    tcdrain(fd)
+    tcdrain(s::Base.LibuvStream)
 
 Wait until all output written to file descriptor fd has been transmitted.
 """
@@ -301,16 +301,16 @@ tcdrain(s::Base.LibuvStream) = tcdrain(_file_handle(s))
 tcdrain(f::Int) = tcdrain(RawFD(f))
 
 """
-    tcflow(fd, action)
+    tcflow(s::Base.LibuvStream, action::Integer)
 
 Suspend transmission or reception of data on the object referred to by fd, depending on the value of action:
 
-- termios.TCOOFF to suspend output,
-- termios.TCOON to restart output
-- termios.TCIOFF to suspend input,
-- termios.TCION to restart input.
+- TERMIOS.TCOOFF to suspend output,
+- TERMIOS.TCOON to restart output
+- TERMIOS.TCIOFF to suspend input,
+- TERMIOS.TCION to restart input.
 """
-function tcflow(fd::RawFD, action::Int)
+function tcflow(fd::RawFD, action::Integer)
     r = ccall(:tcflush, Cint, (Cint, Cint), fd, action)
     r == -1 ? throw(TERMIOSError("tcflow failed: $(Base.Libc.strerror())")) : nothing
 end
@@ -318,15 +318,15 @@ tcflow(s::Base.LibuvStream, action) = tcflow(_file_handle(s), action)
 tcflow(fd::Int, action) = tcflow(RawFD(fd), action)
 
 """
-    tcflush(fd, queue)
+    tcflush(s::Base.LibuvStream, queue::Integer)
 
 Discard data written to the object referred to by fd but not transmitted, or data received but not read, depending on the value of queue_selector:
 
-- termios.TCIFLUSH flushes data received but not read.
-- termios.TCOFLUSH flushes data written but not transmitted.
-- termios.TCIOFLUSH flushes both data received but not read, and data written but not transmitted.
+- TERMIOS.TCIFLUSH flushes data received but not read.
+- TERMIOS.TCOFLUSH flushes data written but not transmitted.
+- TERMIOS.TCIOFLUSH flushes both data received but not read, and data written but not transmitted.
 """
-function tcflush(fd::RawFD, queue::Int)
+function tcflush(fd::RawFD, queue::Integer)
     r = ccall(:tcflush, Cint, (Cint, Cint), fd, queue)
     r == -1 ? throw(TERMIOSError("tcflush failed: $(Base.Libc.strerror())")) : nothing
 end
@@ -334,13 +334,13 @@ tcflush(s::Base.LibuvStream, queue) = tcflush(_file_handle(s), queue)
 tcflush(fd::Int, queue) = tcflush(RawFD(fd), queue)
 
 """
-    tcsendbreak(s::Base.LibuvStream, duration::Int)
+    tcsendbreak(s::Base.LibuvStream, duration::Integer)
 
 Transmit a continuous stream of zero-valued bits for a specific duration, if the terminal is using asynchronous serial data transmission. If duration is zero, it transmits zero-valued bits for at least 0.25 seconds, and not more that 0.5 seconds. If duration is not zero, it sends zero-valued bits for some implementation-defined length of time.
 
 If the terminal is not using asynchronous serial data transmission, tcsendbreak() returns without taking any action.
 """
-function tcsendbreak(fd::RawFD, duration::Int)
+function tcsendbreak(fd::RawFD, duration::Integer)
     r = ccall(:tcsendbreak, Cint, (Cint, Cint), fd, duration)
     r == -1 ? throw(TERMIOSError("tcsendbreak failed: $(Base.Libc.strerror())")) : nothing
 end
@@ -352,12 +352,12 @@ tcsendbreak(f::Int, duration) = tcsendbreak(RawFD(f), duration)
 
 Set the terminal to something like the "raw" mode of the old Version 7 terminal driver: input is available character by character, echoing is disabled, and all special processing of terminal input and output characters is disabled. The terminal attributes are set as follows:
 
-term.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
-             | INLCR | IGNCR | ICRNL | IXON);
-term.c_oflag &= ~OPOST;
-term.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-term.c_cflag &= ~(CSIZE | PARENB);
-term.c_cflag |= CS8;
+    term.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
+                 | INLCR | IGNCR | ICRNL | IXON);
+    term.c_oflag &= ~OPOST;
+    term.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+    term.c_cflag &= ~(CSIZE | PARENB);
+    term.c_cflag |= CS8;
 """
 function cfmakeraw(term::termios)
     r = ccall(:cfmakeraw, Cint, (Ref{termios},), Ref(term))
@@ -369,84 +369,84 @@ end
 
 is a 4.4BSD extension. It takes the same arguments as cfsetispeed(), and sets both input and output speed.
 """
-function cfsetspeed(term::termios, speed::Int)
+function cfsetspeed(term::termios, speed::Integer)
     r = ccall(:cfsetspeed, Cint, (Ref{termios}, speed_t), Ref(term), speed)
     r == -1 ? throw(TERMIOSError("cfsetspeed failed: $(Base.Libc.strerror())")) : nothing
 end
 
 """
-    cfgetispeed(term::termios)::Int
+    cfgetispeed(term::termios) -> Int
 
 Returns the input baud rate stored in the termios structure.
 """
 cfgetispeed(term::termios) = ccall(:cfgetispeed, speed_t, (Ptr{termios}, ), Ref(term))
 
 """
-    cfgetospeed(term::termios)::Int
+    cfgetospeed(term::termios) -> Int
 
 Returns the output baud rate stored in the termios structure.
 """
 cfgetospeed(term::termios) = ccall(:cfgetospeed, speed_t, (Ptr{termios}, ), Ref(term))
 
 """
-    cfsetispeed(term::termios, speed::Int)
+    cfsetispeed(term::termios, speed::Integer)
 
 sets the input baud rate stored in the termios structure to speed, which must be one of these constants:
-- B0
-- B50
-- B75
-- B110
-- B134
-- B150
-- B200
-- B300
-- B600
-- B1200
-- B1800
-- B2400
-- B4800
-- B9600
-- B19200
-- B38400
-- B57600
-- B115200
-- B230400
+- TERMIOS.B0
+- TERMIOS.B50
+- TERMIOS.B75
+- TERMIOS.B110
+- TERMIOS.B134
+- TERMIOS.B150
+- TERMIOS.B200
+- TERMIOS.B300
+- TERMIOS.B600
+- TERMIOS.B1200
+- TERMIOS.B1800
+- TERMIOS.B2400
+- TERMIOS.B4800
+- TERMIOS.B9600
+- TERMIOS.B19200
+- TERMIOS.B38400
+- TERMIOS.B57600
+- TERMIOS.B115200
+- TERMIOS.B230400
 
 The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 & CBAUDEX is nonzero.
 """
-function cfsetispeed(term::termios, speed::Int)
+function cfsetispeed(term::termios, speed::Integer)
     r = ccall(:cfsetispeed, Cint, (Ref{termios}, speed_t), Ref(term), speed)
     r == -1 ? throw(TERMIOSError("cfsetispeed failed: $(Base.Libc.strerror())")) : nothing
 end
 
 
 """
-    cfsetospeed(term::termios, speed::Int)
+    cfsetospeed(term::termios, speed::Integer)
 
 sets the output baud rate stored in the termios structure to speed, which must be one of these constants:
-- B0
-- B50
-- B75
-- B110
-- B134
-- B150
-- B200
-- B300
-- B600
-- B1200
-- B1800
-- B2400
-- B4800
-- B9600
-- B19200
-- B38400
-- B57600
-- B115200
-- B230400
+- TERMIOS.B0
+- TERMIOS.B50
+- TERMIOS.B75
+- TERMIOS.B110
+- TERMIOS.B134
+- TERMIOS.B150
+- TERMIOS.B200
+- TERMIOS.B300
+- TERMIOS.B600
+- TERMIOS.B1200
+- TERMIOS.B1800
+- TERMIOS.B2400
+- TERMIOS.B4800
+- TERMIOS.B9600
+- TERMIOS.B19200
+- TERMIOS.B38400
+- TERMIOS.B57600
+- TERMIOS.B115200
+- TERMIOS.B230400
 
 The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 & CBAUDEX is nonzero.
 """
-function cfsetospeed(term::termios, speed::Int)
+function cfsetospeed(term::termios, speed::Integer)
     r = ccall(:cfsetospeed, Cint, (Ref{termios}, speed_t), Ref(term), speed)
     r == -1 ? throw(TERMIOSError("cfsetospeed failed: $(Base.Libc.strerror())")) : nothing
 end
