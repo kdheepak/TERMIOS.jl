@@ -226,7 +226,7 @@ mutable struct termios
     c_ospeed::speed_t           #= output speed  =#
 end
 
-function init_termios()
+function termios()
 
     term = @static if Sys.islinux() termios(
             0,
@@ -255,20 +255,20 @@ function init_termios()
 end
 
 # helper function
-_file_handle(tty::Base.TTY) = ccall(:jl_uv_file_handle, Base.OS_HANDLE, (Ptr{Cvoid},), tty.handle)
+_file_handle(s::Base.LibuvStream) = ccall(:jl_uv_file_handle, Base.OS_HANDLE, (Ptr{Cvoid},), s.handle)
 
 """
     tcgetattr(fd::RawFD, term::termios)
-    tcgetattr(tty::Base.TTY, term::termios)
+    tcgetattr(s::Base.LibuvStream, term::termios)
     tcgetattr(f::Int, term::termios)
 
 Get the tty attributes for file descriptor fd
 """
 function tcgetattr(fd::RawFD, term::termios)
     r = ccall(:tcgetattr, Cint, (Cint, Ptr{Cvoid}), fd, Ref(term))
-    r == -1 && throw(TERMIOSError("tcgetattr failed."))
+    r == -1 ? throw(TERMIOSError("tcgetattr failed: $(Base.Libc.strerror())")) : nothing
 end
-tcgetattr(tty::Base.TTY, term) = tcgetattr(_file_handle(tty), term)
+tcgetattr(s::Base.LibuvStream, term) = tcgetattr(_file_handle(s), term)
 tcgetattr(f::Int, term) = tcgetattr(RawFD(f), term)
 
 """
@@ -283,9 +283,9 @@ The when argument determines when the attributes are changed:
 """
 function tcsetattr(fd::RawFD, when, term::termios)
     r = ccall(:tcgetattr, Cint, (Cint, Cint, Ptr{Cvoid}), fd, when, Ref(term))
-    r == -1 && throw(TERMIOSError("tcsetattr failed."))
+    r == -1 ? throw(TERMIOSError("tcsetattr failed: $(Base.Libc.strerror())")) : nothing
 end
-tcsetattr(tty::Base.TTY, when, term) = tcsetattr(_file_handle(tty), when, term)
+tcsetattr(s::Base.LibuvStream, when, term) = tcsetattr(_file_handle(s), when, term)
 tcsetattr(f::Int, when, term) = tcsetattr(RawFD(f), when, term)
 
 """
@@ -295,9 +295,9 @@ Wait until all output written to file descriptor fd has been transmitted.
 """
 function tcdrain(fd::RawFD)
     r = ccall(:tcdrain, Cint, (Cint, ), fd)
-    r == -1 && throw(TERMIOSError("tcdrain failed."))
+    r == -1 ? throw(TERMIOSError("tcdrain failed: $(Base.Libc.strerror())")) : nothing
 end
-tcdrain(tty::Base.TTY) = tcdrain(_file_handle(tty))
+tcdrain(s::Base.LibuvStream) = tcdrain(_file_handle(s))
 tcdrain(f::Int) = tcdrain(RawFD(f))
 
 """
@@ -312,9 +312,9 @@ Suspend transmission or reception of data on the object referred to by fd, depen
 """
 function tcflow(fd::RawFD, action::Int)
     r = ccall(:tcflush, Cint, (Cint, Cint), fd, action)
-    r == -1 && throw(TERMIOSError("tcflow failed."))
+    r == -1 ? throw(TERMIOSError("tcflow failed: $(Base.Libc.strerror())")) : nothing
 end
-tcflow(tty::Base.TTY, action) = tcflow(_file_handle(tty), action)
+tcflow(s::Base.LibuvStream, action) = tcflow(_file_handle(s), action)
 tcflow(fd::Int, action) = tcflow(RawFD(fd), action)
 
 """
@@ -328,13 +328,13 @@ Discard data written to the object referred to by fd but not transmitted, or dat
 """
 function tcflush(fd::RawFD, queue::Int)
     r = ccall(:tcflush, Cint, (Cint, Cint), fd, queue)
-    r == -1 && throw(TERMIOSError("tcflush failed."))
+    r == -1 ? throw(TERMIOSError("tcflush failed: $(Base.Libc.strerror())")) : nothing
 end
-tcflush(tty::Base.TTY, queue) = tcflush(_file_handle(tty), queue)
+tcflush(s::Base.LibuvStream, queue) = tcflush(_file_handle(s), queue)
 tcflush(fd::Int, queue) = tcflush(RawFD(fd), queue)
 
 """
-    tcsendbreak(tty::Base.TTY, duration::Int)
+    tcsendbreak(s::Base.LibuvStream, duration::Int)
 
 Transmit a continuous stream of zero-valued bits for a specific duration, if the terminal is using asynchronous serial data transmission. If duration is zero, it transmits zero-valued bits for at least 0.25 seconds, and not more that 0.5 seconds. If duration is not zero, it sends zero-valued bits for some implementation-defined length of time.
 
@@ -342,9 +342,9 @@ If the terminal is not using asynchronous serial data transmission, tcsendbreak(
 """
 function tcsendbreak(fd::RawFD, duration::Int)
     r = ccall(:tcsendbreak, Cint, (Cint, Cint), fd, duration)
-    r == -1 && throw(TERMIOSError("tcsendbreak failed."))
+    r == -1 ? throw(TERMIOSError("tcsendbreak failed: $(Base.Libc.strerror())")) : nothing
 end
-tcsendbreak(tty::Base.TTY, duration) = tcsendbreak(_file_handle(tty), duration)
+tcsendbreak(s::Base.LibuvStream, duration) = tcsendbreak(_file_handle(s), duration)
 tcsendbreak(f::Int, duration) = tcsendbreak(RawFD(f), duration)
 
 """
@@ -361,7 +361,7 @@ term.c_cflag |= CS8;
 """
 function cfmakeraw(term::termios)
     r = ccall(:cfmakeraw, Cint, (Ref{termios},), Ref(term))
-    r == -1 && throw(TERMIOSError("cfmakeraw failed."))
+    r == -1 ? throw(TERMIOSError("cfmakeraw failed: $(Base.Libc.strerror())")) : nothing
 end
 
 """
@@ -371,7 +371,7 @@ is a 4.4BSD extension. It takes the same arguments as cfsetispeed(), and sets bo
 """
 function cfsetspeed(term::termios, speed::Int)
     r = ccall(:cfsetspeed, Cint, (Ref{termios}, speed_t), Ref(term), speed)
-    r == -1 && throw(TERMIOSError("cfsetspeed failed."))
+    r == -1 ? throw(TERMIOSError("cfsetspeed failed: $(Base.Libc.strerror())")) : nothing
 end
 
 """
@@ -416,7 +416,7 @@ The zero baud rate, B0, is used to terminate the connection. If B0 is specified,
 """
 function cfsetispeed(term::termios, speed::Int)
     r = ccall(:cfsetispeed, Cint, (Ref{termios}, speed_t), Ref(term), speed)
-    r == -1 && throw(TERMIOSError("cfsetispeed failed."))
+    r == -1 ? throw(TERMIOSError("cfsetispeed failed: $(Base.Libc.strerror())")) : nothing
 end
 
 
@@ -448,7 +448,7 @@ The zero baud rate, B0, is used to terminate the connection. If B0 is specified,
 """
 function cfsetospeed(term::termios, speed::Int)
     r = ccall(:cfsetospeed, Cint, (Ref{termios}, speed_t), Ref(term), speed)
-    r == -1 && throw(TERMIOSError("cfsetospeed failed."))
+    r == -1 ? throw(TERMIOSError("cfsetospeed failed: $(Base.Libc.strerror())")) : nothing
 end
 
 end # module
