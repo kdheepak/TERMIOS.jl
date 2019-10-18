@@ -1,0 +1,576 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="Dheepak Krishnamurthy">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.9.4">
+    
+    
+      
+        <title>Usage - TERMIOS.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../assets\Documenter.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#usage" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="TERMIOS.jl" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                TERMIOS.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Usage
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/kdheepak/TERMIOS.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="TERMIOS.jl" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    TERMIOS.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/kdheepak/TERMIOS.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Usage
+      </label>
+    
+    <a href="./" title="Usage" class="md-nav__link md-nav__link--active">
+      Usage
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api" title="API" class="md-nav__link">
+    API
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api" title="API" class="md-nav__link">
+    API
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/kdheepak/TERMIOS.jl/tree/master/docs/src/usage.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Usage-1'></a></p>
+<h1 id="usage">Usage</h1>
+<p><a id='API-1'></a></p>
+<h3 id="api">API</h3>
+<p><a id='TERMIOS.cfgetispeed-Tuple{TERMIOS.termios}' href='#TERMIOS.cfgetispeed-Tuple{TERMIOS.termios}'>#</a>
+<strong><code>TERMIOS.cfgetispeed</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">cfgetispeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span><span class="o">::</span><span class="kt">Int</span>
+</pre></div>
+
+
+<p>Returns the input baud rate stored in the termios structure.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L377-L381' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.cfgetospeed-Tuple{TERMIOS.termios}' href='#TERMIOS.cfgetospeed-Tuple{TERMIOS.termios}'>#</a>
+<strong><code>TERMIOS.cfgetospeed</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">cfgetospeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span><span class="o">::</span><span class="kt">Int</span>
+</pre></div>
+
+
+<p>Returns the output baud rate stored in the termios structure.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L384-L388' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.cfmakeraw-Tuple{TERMIOS.termios}' href='#TERMIOS.cfmakeraw-Tuple{TERMIOS.termios}'>#</a>
+<strong><code>TERMIOS.cfmakeraw</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">cfmakeraw</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Set the terminal to something like the "raw" mode of the old Version 7 terminal driver: input is available character by character, echoing is disabled, and all special processing of terminal input and output characters is disabled. The terminal attributes are set as follows:</p>
+<p>term.c<em>iflag &amp;= ~(IGNBRK | BRKINT | PARMRK | ISTRIP              | INLCR | IGNCR | ICRNL | IXON); term.c</em>oflag &amp;= ~OPOST; term.c<em>lflag &amp;= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN); term.c</em>cflag &amp;= ~(CSIZE | PARENB); term.c_cflag |= CS8;</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L350-L361' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.cfsetispeed-Tuple{TERMIOS.termios,Int64}' href='#TERMIOS.cfsetispeed-Tuple{TERMIOS.termios,Int64}'>#</a>
+<strong><code>TERMIOS.cfsetispeed</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">cfsetispeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">,</span> <span class="n">speed</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span>
+</pre></div>
+
+
+<p>sets the input baud rate stored in the termios structure to speed, which must be one of these constants:</p>
+<ul>
+<li>B0</li>
+<li>B50</li>
+<li>B75</li>
+<li>B110</li>
+<li>B134</li>
+<li>B150</li>
+<li>B200</li>
+<li>B300</li>
+<li>B600</li>
+<li>B1200</li>
+<li>B1800</li>
+<li>B2400</li>
+<li>B4800</li>
+<li>B9600</li>
+<li>B19200</li>
+<li>B38400</li>
+<li>B57600</li>
+<li>B115200</li>
+<li>B230400</li>
+</ul>
+<p>The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 &amp; CBAUDEX is nonzero.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L391-L416' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.cfsetospeed-Tuple{TERMIOS.termios,Int64}' href='#TERMIOS.cfsetospeed-Tuple{TERMIOS.termios,Int64}'>#</a>
+<strong><code>TERMIOS.cfsetospeed</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">cfsetospeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">,</span> <span class="n">speed</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span>
+</pre></div>
+
+
+<p>sets the output baud rate stored in the termios structure to speed, which must be one of these constants:</p>
+<ul>
+<li>B0</li>
+<li>B50</li>
+<li>B75</li>
+<li>B110</li>
+<li>B134</li>
+<li>B150</li>
+<li>B200</li>
+<li>B300</li>
+<li>B600</li>
+<li>B1200</li>
+<li>B1800</li>
+<li>B2400</li>
+<li>B4800</li>
+<li>B9600</li>
+<li>B19200</li>
+<li>B38400</li>
+<li>B57600</li>
+<li>B115200</li>
+<li>B230400</li>
+</ul>
+<p>The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 &amp; CBAUDEX is nonzero.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L423-L448' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.cfsetspeed-Tuple{TERMIOS.termios,Int64}' href='#TERMIOS.cfsetspeed-Tuple{TERMIOS.termios,Int64}'>#</a>
+<strong><code>TERMIOS.cfsetspeed</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">cfsetspeed</span><span class="p">(</span><span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">,</span> <span class="n">speed</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span>
+</pre></div>
+
+
+<p>is a 4.4BSD extension. It takes the same arguments as cfsetispeed(), and sets both input and output speed.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L367-L371' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.tcdrain-Tuple{RawFD}' href='#TERMIOS.tcdrain-Tuple{RawFD}'>#</a>
+<strong><code>TERMIOS.tcdrain</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">tcdrain</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Wait until all output written to file descriptor fd has been transmitted.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L291-L295' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.tcflow-Tuple{RawFD,Int64}' href='#TERMIOS.tcflow-Tuple{RawFD,Int64}'>#</a>
+<strong><code>TERMIOS.tcflow</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">tcflow</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Suspend transmission or reception of data on the object referred to by fd, depending on the value of action:</p>
+<ul>
+<li>termios.TCOOFF to suspend output,</li>
+<li>termios.TCOON to restart output</li>
+<li>termios.TCIOFF to suspend input,</li>
+<li>termios.TCION to restart input.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L303-L312' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.tcflush-Tuple{RawFD,Int64}' href='#TERMIOS.tcflush-Tuple{RawFD,Int64}'>#</a>
+<strong><code>TERMIOS.tcflush</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">tcflush</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">queue</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Discard data written to the object referred to by fd but not transmitted, or data received but not read, depending on the value of queue_selector:</p>
+<ul>
+<li>termios.TCIFLUSH flushes data received but not read.</li>
+<li>termios.TCOFLUSH flushes data written but not transmitted.</li>
+<li>termios.TCIOFLUSH flushes both data received but not read, and data written but not transmitted.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L320-L328' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.tcgetattr-Tuple{RawFD,TERMIOS.termios}' href='#TERMIOS.tcgetattr-Tuple{RawFD,TERMIOS.termios}'>#</a>
+<strong><code>TERMIOS.tcgetattr</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">fd</span><span class="o">::</span><span class="kt">RawFD</span><span class="p">,</span> <span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
+<span class="n">tcgetattr</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">,</span> <span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
+<span class="n">tcgetattr</span><span class="p">(</span><span class="n">f</span><span class="o">::</span><span class="kt">Int</span><span class="p">,</span> <span class="n">term</span><span class="o">::</span><span class="n">termios</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Get the tty attributes for file descriptor fd</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L260-L266' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.tcsendbreak-Tuple{RawFD,Int64}' href='#TERMIOS.tcsendbreak-Tuple{RawFD,Int64}'>#</a>
+<strong><code>TERMIOS.tcsendbreak</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">tcsendbreak</span><span class="p">(</span><span class="n">s</span><span class="o">::</span><span class="n">Base</span><span class="o">.</span><span class="n">LibuvStream</span><span class="p">,</span> <span class="n">duration</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Transmit a continuous stream of zero-valued bits for a specific duration, if the terminal is using asynchronous serial data transmission. If duration is zero, it transmits zero-valued bits for at least 0.25 seconds, and not more that 0.5 seconds. If duration is not zero, it sends zero-valued bits for some implementation-defined length of time.</p>
+<p>If the terminal is not using asynchronous serial data transmission, tcsendbreak() returns without taking any action.</p>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L336-L342' class='documenter-source'>source</a><br></p>
+<p><a id='TERMIOS.tcsetattr-Tuple{RawFD,Any,TERMIOS.termios}' href='#TERMIOS.tcsetattr-Tuple{RawFD,Any,TERMIOS.termios}'>#</a>
+<strong><code>TERMIOS.tcsetattr</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">when</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Set the tty attributes for file descriptor fd. The when argument determines when the attributes are changed:</p>
+<ul>
+<li>termios.TCSANOW to change immediately</li>
+<li>termios.TCSADRAIN to change after transmitting all queued output</li>
+<li>termios.TCSAFLUSH to change after transmitting all queued output and discarding all queued input.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/kdheepak/TERMIOS.jl/blob/d22dcb15f6c56f4375447e9e493a2f18d1f050fe/src/TERMIOS.jl#L274-L283' class='documenter-source'>source</a><br></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href=".." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.30f6b8b1.js"></script>
+      
+      <script>app.initialize({version:"0.17.5",url:{base:".."}})</script>
+      
+        <script src="../mathjax-config.js"></script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>
