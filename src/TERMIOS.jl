@@ -32,6 +32,7 @@ const VSTATUS  = Sys.islinux() ? nothing : 18 #= Status character ICANON togethe
 const NCCS     = Sys.islinux() ? 32      : 20
 
 const VSWTC    = Sys.islinux() ? 7 : nothing
+
 #
 # Input flags - software input processing
 #
