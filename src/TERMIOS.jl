@@ -277,9 +277,9 @@ tcgetattr(f::Int, term) = tcgetattr(RawFD(f), term)
 Set the tty attributes for file descriptor fd.
 The when argument determines when the attributes are changed:
 
-- TERMIOS.TCSANOW to change immediately
-- TERMIOS.TCSADRAIN to change after transmitting all queued output
-- TERMIOS.TCSAFLUSH to change after transmitting all queued output and discarding all queued input.
+- `TERMIOS.TCSANOW` to change immediately
+- `TERMIOS.TCSADRAIN` to change after transmitting all queued output
+- `TERMIOS.TCSAFLUSH` to change after transmitting all queued output and discarding all queued input.
 """
 function tcsetattr(fd::RawFD, when::Integer, term::termios)
     r = ccall(:tcgetattr, Cint, (Cint, Cint, Ptr{Cvoid}), fd, when, Ref(term))
@@ -305,10 +305,10 @@ tcdrain(f::Int) = tcdrain(RawFD(f))
 
 Suspend transmission or reception of data on the object referred to by fd, depending on the value of action:
 
-- TERMIOS.TCOOFF to suspend output,
-- TERMIOS.TCOON to restart output
-- TERMIOS.TCIOFF to suspend input,
-- TERMIOS.TCION to restart input.
+- `TERMIOS.TCOOFF` to suspend output,
+- `TERMIOS.TCOON` to restart output
+- `TERMIOS.TCIOFF` to suspend input,
+- `TERMIOS.TCION` to restart input.
 """
 function tcflow(fd::RawFD, action::Integer)
     r = ccall(:tcflush, Cint, (Cint, Cint), fd, action)
@@ -322,9 +322,9 @@ tcflow(fd::Int, action) = tcflow(RawFD(fd), action)
 
 Discard data written to the object referred to by fd but not transmitted, or data received but not read, depending on the value of queue_selector:
 
-- TERMIOS.TCIFLUSH flushes data received but not read.
-- TERMIOS.TCOFLUSH flushes data written but not transmitted.
-- TERMIOS.TCIOFLUSH flushes both data received but not read, and data written but not transmitted.
+- `TERMIOS.TCIFLUSH` flushes data received but not read.
+- `TERMIOS.TCOFLUSH` flushes data written but not transmitted.
+- `TERMIOS.TCIOFLUSH` flushes both data received but not read, and data written but not transmitted.
 """
 function tcflush(fd::RawFD, queue::Integer)
     r = ccall(:tcflush, Cint, (Cint, Cint), fd, queue)
@@ -392,25 +392,25 @@ cfgetospeed(term::termios) = ccall(:cfgetospeed, speed_t, (Ptr{termios}, ), Ref(
     cfsetispeed(term::termios, speed::Integer)
 
 sets the input baud rate stored in the termios structure to speed, which must be one of these constants:
-- TERMIOS.B0
-- TERMIOS.B50
-- TERMIOS.B75
-- TERMIOS.B110
-- TERMIOS.B134
-- TERMIOS.B150
-- TERMIOS.B200
-- TERMIOS.B300
-- TERMIOS.B600
-- TERMIOS.B1200
-- TERMIOS.B1800
-- TERMIOS.B2400
-- TERMIOS.B4800
-- TERMIOS.B9600
-- TERMIOS.B19200
-- TERMIOS.B38400
-- TERMIOS.B57600
-- TERMIOS.B115200
-- TERMIOS.B230400
+- `TERMIOS.B0`
+- `TERMIOS.B50`
+- `TERMIOS.B75`
+- `TERMIOS.B110`
+- `TERMIOS.B134`
+- `TERMIOS.B150`
+- `TERMIOS.B200`
+- `TERMIOS.B300`
+- `TERMIOS.B600`
+- `TERMIOS.B1200`
+- `TERMIOS.B1800`
+- `TERMIOS.B2400`
+- `TERMIOS.B4800`
+- `TERMIOS.B9600`
+- `TERMIOS.B19200`
+- `TERMIOS.B38400`
+- `TERMIOS.B57600`
+- `TERMIOS.B115200`
+- `TERMIOS.B230400`
 
 The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 & CBAUDEX is nonzero.
 """
@@ -424,25 +424,25 @@ end
     cfsetospeed(term::termios, speed::Integer)
 
 sets the output baud rate stored in the termios structure to speed, which must be one of these constants:
-- TERMIOS.B0
-- TERMIOS.B50
-- TERMIOS.B75
-- TERMIOS.B110
-- TERMIOS.B134
-- TERMIOS.B150
-- TERMIOS.B200
-- TERMIOS.B300
-- TERMIOS.B600
-- TERMIOS.B1200
-- TERMIOS.B1800
-- TERMIOS.B2400
-- TERMIOS.B4800
-- TERMIOS.B9600
-- TERMIOS.B19200
-- TERMIOS.B38400
-- TERMIOS.B57600
-- TERMIOS.B115200
-- TERMIOS.B230400
+- `TERMIOS.B0`
+- `TERMIOS.B50`
+- `TERMIOS.B75`
+- `TERMIOS.B110`
+- `TERMIOS.B134`
+- `TERMIOS.B150`
+- `TERMIOS.B200`
+- `TERMIOS.B300`
+- `TERMIOS.B600`
+- `TERMIOS.B1200`
+- `TERMIOS.B1800`
+- `TERMIOS.B2400`
+- `TERMIOS.B4800`
+- `TERMIOS.B9600`
+- `TERMIOS.B19200`
+- `TERMIOS.B38400`
+- `TERMIOS.B57600`
+- `TERMIOS.B115200`
+- `TERMIOS.B230400`
 
 The zero baud rate, B0, is used to terminate the connection. If B0 is specified, the modem control lines shall no longer be asserted. Normally, this will disconnect the line. CBAUDEX is a mask for the speeds beyond those defined in POSIX.1 (57600 and above). Thus, B57600 & CBAUDEX is nonzero.
 """
