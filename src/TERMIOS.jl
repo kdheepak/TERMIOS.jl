@@ -519,7 +519,7 @@ The when argument determines when the attributes are changed:
 - `TERMIOS.TCSAFLUSH` to change after transmitting all queued output and discarding all queued input.
 """
 function tcsetattr(fd::RawFD, when::Integer, term::termios)
-    r = ccall(:tcgetattr, Cint, (Cint, Cint, Ptr{Cvoid}), fd, when, Ref(term))
+    r = ccall(:tcsetattr, Cint, (Cint, Cint, Ptr{Cvoid}), fd, when, Ref(term))
     r == -1 ? throw(TERMIOSError("tcsetattr failed: $(Base.Libc.strerror())")) : nothing
 end
 tcsetattr(s::Base.LibuvStream, when, term) = tcsetattr(_file_handle(s), when, term)
