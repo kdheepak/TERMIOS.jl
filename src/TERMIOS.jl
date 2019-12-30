@@ -34,7 +34,7 @@ const VEOF = Sys.islinux() ? 4 : 0
 """End-of-line character ICANON"""
 const VEOL = Sys.islinux() ? 11 : 1
 
-"""Second EOL character ICANON together with IEXTEN    """
+"""Second EOL character ICANON together with IEXTEN"""
 const VEOL2 = Sys.islinux() ? 16 : 2
 
 """Erase character ICANON"""
@@ -176,7 +176,7 @@ raw"""\b delay"""
 const BSDLY = Sys.islinux() ? 0x00002000 : 0x00008000
 
 """Vertical tab delay"""
-const VTDLY  = Sys.islinux() ? 0x00004000 : 0x00010000
+const VTDLY = Sys.islinux() ? 0x00004000 : 0x00010000
 
 """NL type 0."""
 const NL0 = 0x00000000
@@ -465,7 +465,8 @@ end
 
 function termios()
 
-    term = @static if Sys.islinux() termios(
+    term = @static if Sys.islinux()
+        termios(
             0,
             0,
             0,
@@ -473,18 +474,18 @@ function termios()
             0,
             Tuple([0 for _ in 1:NCCS]),
             0,
-            0
-           )
+            0,
+        )
     else
-                             termios(
+        termios(
             0,
             0,
             0,
             0,
             Tuple([0 for _ in 1:NCCS]),
             0,
-            0
-           )
+            0,
+        )
     end
 
    return term
