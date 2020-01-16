@@ -443,14 +443,39 @@ const TCIOFF = Sys.islinux() ? 4 : 3
 """Send a START character."""
 const TCION = Sys.islinux() ? 8 : 4
 
-macro c_cc()
-    expr = Expr(:block)
-    for i in 1:NCCS
-        s = Symbol("_c_cc$i")
-        push!(expr.args, :($s::UInt8))
-    end
-    return esc(expr)
-end
+########################################################################################################################
+
+# The layout of a termios struct in C must be as follows
+#
+# ```c
+# struct termios {
+# 	tcflag_t	c_iflag;
+# 	tcflag_t	c_oflag;
+# 	tcflag_t	c_cflag;
+# 	tcflag_t	c_lflag;
+# 	cc_t		c_line;
+# 	cc_t		c_cc[NCCS];
+# 	speed_t		c_ispeed;
+# 	speed_t		c_ospeed;
+# };
+# ```
+#
+# We need to create this struct in Julia and set the memory layout in Julia.
+# the termios library requires passing in a termios struct that is used to get or set attributes
+# There are two ways to create a `struct` in Julia that affect the memory layout.
+# `struct termios end` and `mutable struct termios end`
+# The first one is a immutable, and cannot be passed as a reference into a library.
+# Additionally, because it is a immutable, Julia may make a copy of the struct instead of passing in the reference.
+# The second one is what we want.
+# Typical workflow in using the termios library involves using `tcgetattr` to initialize a termios struct, changing values appropriately
+# and using `tcsetattr` to set the attributes.
+# the termios struct has a field `c_cc[NCCS]`.
+# This field is laid out sequentially in memory.
+# In Julia, there are two ways to lay out memory sequentially. We can either
+# 1) use a `NTuple{NCCS, UInt8}`
+# 2) lay out the memory manually
+# Tuples are immutable, which means if a user wants to change `termios.c_cc`, they would have to create a new tuple with the values needed.
+# In both of these approaches, we can use `getproperty` to mimic the interface presented in C
 
 mutable struct termios
     """Input flags"""
@@ -465,7 +490,7 @@ mutable struct termios
         c_line::cc_t
     end
     """Control chars"""
-    @c_cc
+    _c_cc::NTuple{NCCS, UInt8}
     """Input speed"""
     c_ispeed::speed_t
     """Output speed"""
@@ -509,27 +534,14 @@ struct _C_CC
     ref::termios
 end
 
- struct _C_CC_Exception <: Exception
-    msg::AbstractString
-end
-
-function Base.showerror(io::IO, err::_C_CC_Exception)
-   print(io, "BoundsError: ")
-   print(io, err.msg)
-end
-
 function Base.getindex(c_cc::_C_CC, index)
-    if index > NCCS
-        throw(_C_CC_Exception("attempt to access $(NCCS)-element Array{UInt8,1} at index [$(index)]"))
-    end
-    getfield(c_cc.ref, Symbol("_c_cc$index"))
+    return collect(c_cc.ref._c_cc)[index]
 end
 
 function Base.setindex!(c_cc::_C_CC, value, index)
-    if index > NCCS
-        throw(_C_CC_Exception("attempt to access $(NCCS)-element Array{UInt8,1} at index [$(index)]"))
-    end
-    setfield!(c_cc.ref, Symbol("_c_cc$index"), UInt8(value))
+    _c_cc = collect(c_cc.ref._c_cc)
+    _c_cc[index] = value
+    c_cc.ref._c_cc = NTuple{NCCS, UInt8}(_c_cc)
 end
 
 function Base.show(io::IO, ::MIME"text/plain", c_cc::_C_CC)
@@ -563,7 +575,7 @@ function termios()
             0,
             0,
             0,
-            [0 for _ in 1:NCCS]...,
+            NTuple{NCCS, UInt8}([0 for _ in 1:NCCS]),
             0,
             0,
         )
@@ -573,7 +585,7 @@ function termios()
             0,
             0,
             0,
-            [0 for _ in 1:NCCS]...,
+            NTuple{NCCS, UInt8}([0 for _ in 1:NCCS]),
             0,
             0,
         )
