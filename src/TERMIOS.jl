@@ -443,6 +443,15 @@ const TCIOFF = Sys.islinux() ? 4 : 3
 """Send a START character."""
 const TCION = Sys.islinux() ? 8 : 4
 
+macro c_cc()
+    expr = Expr(:block)
+    for i in 1:NCCS
+        s = Symbol("_c_cc$i")
+        push!(expr.args, :($s::UInt8))
+    end
+    return esc(expr)
+end
+
 mutable struct termios
     """Input flags"""
     c_iflag::tcflag_t
@@ -456,12 +465,94 @@ mutable struct termios
         c_line::cc_t
     end
     """Control chars"""
-    c_cc::NTuple{NCCS, UInt8}
+    @c_cc
     """Input speed"""
     c_ispeed::speed_t
     """Output speed"""
     c_ospeed::speed_t
 end
+
+function Base.getproperty(t::termios, name::Symbol)
+    if name == :c_cc
+        return _C_CC(t)
+    else
+        return getfield(t, name)
+    end
+end
+
+function Base.propertynames(t::termios, private = false)
+    return @static if Sys.islinux()
+        (
+            :c_iflag,
+            :c_oflag,
+            :c_cflag,
+            :c_lflag,
+            :c_cc,
+            :c_ispeed,
+            :c_ospeed,
+        )
+    else
+        (
+            :c_iflag,
+            :c_oflag,
+            :c_cflag,
+            :c_lflag,
+            :c_line,
+            :c_cc,
+            :c_ispeed,
+            :c_ospeed,
+        )
+    end
+end
+
+struct _C_CC
+    ref::termios
+end
+
+ struct _C_CC_Exception <: Exception
+    msg::AbstractString
+end
+
+function Base.showerror(io::IO, err::_C_CC_Exception)
+   print(io, "BoundsError: ")
+   print(io, err.msg)
+end
+
+function Base.getindex(c_cc::_C_CC, index)
+    if index > NCCS
+        throw(_C_CC_Exception("attempt to access $(NCCS)-element Array{UInt8,1} at index [$(index)]"))
+    end
+    getfield(c_cc.ref, Symbol("_c_cc$index"))
+end
+
+function Base.setindex!(c_cc::_C_CC, value, index)
+    if index > NCCS
+        throw(_C_CC_Exception("attempt to access $(NCCS)-element Array{UInt8,1} at index [$(index)]"))
+    end
+    setfield!(c_cc.ref, Symbol("_c_cc$index"), UInt8(value))
+end
+
+function Base.show(io::IO, ::MIME"text/plain", c_cc::_C_CC)
+    X = [getfield(c_cc.ref, Symbol("_c_cc$i")) for i in 1:NCCS]
+    summary(io, X)
+    isempty(X) && return
+    print(io, ":")
+    if !haskey(io, :compact) && length(axes(X, 2)) > 1
+        io = IOContext(io, :compact => true)
+    end
+    if get(io, :limit, false) && eltype(X) === Method
+        # override usual show method for Vector{Method}: don't abbreviate long lists
+        io = IOContext(io, :limit => false)
+    end
+    if get(io, :limit, false) && displaysize(io)[1]-4 <= 0
+        return print(io, " …")
+    else
+        println(io)
+    end
+    io = IOContext(io, :typeinfo => eltype(X))
+    Base.print_array(io, X)
+end
+
 
 function termios()
 
@@ -472,7 +563,7 @@ function termios()
             0,
             0,
             0,
-            Tuple([0 for _ in 1:NCCS]),
+            [0 for _ in 1:NCCS]...,
             0,
             0,
         )
@@ -482,7 +573,7 @@ function termios()
             0,
             0,
             0,
-            Tuple([0 for _ in 1:NCCS]),
+            [0 for _ in 1:NCCS]...,
             0,
             0,
         )
