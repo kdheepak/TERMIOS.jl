@@ -18,7 +18,7 @@ const c_ospeed = Sys.islinux() ? 0x0000000f : 0x0000000000002580
     @test term.c_oflag == c_oflag
     @test term.c_cflag == c_cflag
     @test term.c_lflag == c_lflag
-    @test term.c_cc    == c_cc
+    @test_broken term.c_cc == c_cc
     @test term.c_ispeed == c_ispeed
     @test term.c_ospeed == c_ospeed
 
@@ -28,7 +28,7 @@ const c_ospeed = Sys.islinux() ? 0x0000000f : 0x0000000000002580
     @test term.c_oflag == c_oflag
     @test term.c_cflag == c_cflag
     @test term.c_lflag == c_lflag
-    @test term.c_cc    == c_cc
+    @test_broken term.c_cc == c_cc
     @test term.c_ispeed == c_ispeed
     @test term.c_ospeed == c_ospeed
 
@@ -59,7 +59,7 @@ end
     @test term.c_oflag == c_oflag
     @test term.c_cflag == c_cflag
     @test term.c_lflag == c_lflag
-    @test term.c_cc    == c_cc
+    @test_broken term.c_cc == c_cc
     @test term.c_ispeed == c_ispeed
     @test term.c_ospeed == c_ospeed
 
