@@ -596,7 +596,7 @@ function termios()
 end
 
 # helper function
-_file_handle(s::Base.LibuvStream) = ccall(:jl_uv_file_handle, Base.OS_HANDLE, (Ptr{Cvoid},), s.handle)
+_file_handle(s::Base.LibuvStream) = Base._fd(s)
 
 """
     tcgetattr(fd::RawFD, term::termios)
