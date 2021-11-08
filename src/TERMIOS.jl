@@ -419,13 +419,13 @@ const B4000000 = 4000000
 # Values for the QUEUE_SELECTOR argument to `tcflush'.
 #
 """Discard data received but not yet read."""
-const TCIFLUSH = 1
+const TCIFLUSH = Sys.islinux() ? 0 : 1
 
 """Discard data written but not yet sent."""
-const TCOFLUSH = 2
+const TCOFLUSH = Sys.islinux() ? 1 : 2
 
 """Discard all pending data."""
-const TCIOFLUSH = 3
+const TCIOFLUSH = Sys.islinux() ? 2 : 3
 
 #
 # Values for the ACTION argument to `tcflow'.
