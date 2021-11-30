@@ -535,12 +535,12 @@ struct _C_CC
 end
 
 function Base.getindex(c_cc::_C_CC, index)
-    return collect(c_cc.ref._c_cc)[index]
+    return collect(c_cc.ref._c_cc)[index + 1]
 end
 
 function Base.setindex!(c_cc::_C_CC, value, index)
     _c_cc = collect(c_cc.ref._c_cc)
-    _c_cc[index] = value
+    _c_cc[index + 1] = value
     c_cc.ref._c_cc = NTuple{NCCS, UInt8}(_c_cc)
 end
 
