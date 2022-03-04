@@ -662,7 +662,7 @@ function testflow(fd, action, values)
 	ccall(:tcflow, Cint, (Cint, Cint), fd, values[off + 1]) == -1 && return false
     TCOOFF, TCOON, TCIOFF, TCION = values
     # call the correct action if the above succeeded
-	ccall(:tcflow, Cint, (Cint, Cint), fd, values[index])
+    ccall(:tcflow, Cint, (Cint, Cint), fd, values[index])
     true
 end
 
