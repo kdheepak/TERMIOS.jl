@@ -658,8 +658,8 @@ function testflow(fd, action, values)
 
     index = findfirst(x-> x == action, FLOWNAMES)
     off = index ÷ 2 * 2
-	ccall(:tcflow, Cint, (Cint, Cint), fd, values[off]) == -1 && return false
-	ccall(:tcflow, Cint, (Cint, Cint), fd, values[off + 1]) == -1 && return false
+    ccall(:tcflow, Cint, (Cint, Cint), fd, values[off]) == -1 && return false
+    ccall(:tcflow, Cint, (Cint, Cint), fd, values[off + 1]) == -1 && return false
     TCOOFF, TCOON, TCIOFF, TCION = values
     # call the correct action if the above succeeded
     ccall(:tcflow, Cint, (Cint, Cint), fd, values[index])
