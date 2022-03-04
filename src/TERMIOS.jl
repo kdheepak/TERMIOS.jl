@@ -432,16 +432,16 @@ const TCIOFLUSH = Sys.islinux() ? 2 : 3
 #
 
 """Suspend output."""
-const TCOOFF = Sys.islinux() ? 16 : 1
+const TCOOFF = Sys.islinux() ? 0 : 1
 
 """Restart suspended output."""
-const TCOON = Sys.islinux() ? 32 : 2
+const TCOON = Sys.islinux() ? 1 : 2
 
 """Send a STOP character."""
-const TCIOFF = Sys.islinux() ? 4 : 3
+const TCIOFF = Sys.islinux() ? 2 : 3
 
 """Send a START character."""
-const TCION = Sys.islinux() ? 8 : 4
+const TCION = Sys.islinux() ? 3 : 4
 
 ########################################################################################################################
 
@@ -652,7 +652,7 @@ Suspend transmission or reception of data on the object referred to by fd, depen
 - `TERMIOS.TCION` to restart input.
 """
 function tcflow(fd::RawFD, action::Integer)
-    r = ccall(:tcflush, Cint, (Cint, Cint), fd, action)
+    r = ccall(:tcflow, Cint, (Cint, Cint), fd, action)
     r == -1 ? throw(TERMIOSError("tcflow failed: $(Base.Libc.strerror())")) : nothing
 end
 tcflow(s::Base.LibuvStream, action) = tcflow(_file_handle(s), action)
