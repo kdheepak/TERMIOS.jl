@@ -431,17 +431,29 @@ const TCIOFLUSH = Sys.islinux() ? 2 : 3
 # Values for the ACTION argument to `tcflow'.
 #
 
+# These action values are variables instead of constants because
+# the Linux values could be one of these sets
+FLOWVALUES = [
+    (0, 1, 2, 3),
+    (16, 32, 4, 8),
+]
+
+# On Linux, start with symbol values
+# if tcflow is called, probe and set them to the correct values
+# these names correspond to the values above
+FLOWNAMES = [:TCOOFF, :TCOON, :TCIOFF, :TCIOF]
+
 """Suspend output."""
-const TCOOFF = Sys.islinux() ? 0 : 1
+TCOOFF = Sys.islinux() ? :TCOOFF : 1
 
 """Restart suspended output."""
-const TCOON = Sys.islinux() ? 1 : 2
+TCOON = Sys.islinux() ? :TCOON : 2
 
 """Send a STOP character."""
-const TCIOFF = Sys.islinux() ? 2 : 3
+TCIOFF = Sys.islinux() ? :TCIOFF : 3
 
 """Send a START character."""
-const TCION = Sys.islinux() ? 3 : 4
+TCION = Sys.islinux() ? :TCION : 4
 
 ########################################################################################################################
 
@@ -640,6 +652,28 @@ function tcdrain(fd::RawFD)
 end
 tcdrain(s::Base.LibuvStream) = tcdrain(_file_handle(s))
 tcdrain(f::Int) = tcdrain(RawFD(f))
+
+function testflow(fd, action, values)
+    global TCOOFF, TCOON, TCIOFF, TCION, FLOWNAMES
+
+    index = findfirst(x-> x == action, FLOWNAMES)
+    off = index ÷ 2 * 2
+	ccall(:tcflow, Cint, (Cint, Cint), fd, values[off]) == -1 && return false
+	ccall(:tcflow, Cint, (Cint, Cint), fd, values[off + 1]) == -1 && return false
+    TCOOFF, TCOON, TCIOFF, TCION = values
+    # call the correct action if the above succeeded
+	ccall(:tcflow, Cint, (Cint, Cint), fd, values[index])
+    true
+end
+
+function tcflow(fd::RawFD, action::Symbol)
+    global FLOWVALUES
+
+    for values in FLOWVALUES
+        testflow(fd, action, values) && return
+    end
+    throw(TERMIOSError("tcflow failed, could not determine correct values for this host for TCOOFF, TCOON, TCIOFF, and TCION")) : nothing
+end
 
 """
     tcflow(s::Base.LibuvStream, action::Integer)
