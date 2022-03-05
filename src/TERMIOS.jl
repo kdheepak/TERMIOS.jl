@@ -441,7 +441,7 @@ FLOWVALUES = [
 # On Linux, start with symbol values
 # if tcflow is called, probe and set them to the correct values
 # these names correspond to the values above
-FLOWNAMES = [:TCOOFF, :TCOON, :TCIOFF, :TCIOF]
+FLOWNAMES = [:TCOOFF, :TCOON, :TCIOFF, :TCION]
 
 """Suspend output."""
 TCOOFF = Sys.islinux() ? :TCOOFF : 1
@@ -657,7 +657,7 @@ function testflow(fd, action, values)
     global TCOOFF, TCOON, TCIOFF, TCION, FLOWNAMES
 
     index = findfirst(x-> x == action, FLOWNAMES)
-    off = index ÷ 2 * 2
+    off = (index - 1) ÷ 2 * 2 + 1
     ccall(:tcflow, Cint, (Cint, Cint), fd, values[off]) == -1 && return false
     ccall(:tcflow, Cint, (Cint, Cint), fd, values[off + 1]) == -1 && return false
     TCOOFF, TCOON, TCIOFF, TCION = values
